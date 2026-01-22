@@ -1,13 +1,11 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController; 
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
+// jeito mais detalhado e que ocupa mais linhas
+// Route::get('/users', [UserController::class, 'index']);
+// Route::post('/users', [UserController::class, 'store']);
 
-Route::get('/users', function(Request $request) {
-    return User::all(); 
-});
+// cadastra as 5 rotas de maneira automatica
+Route::apiResource('users', UserController::class);
