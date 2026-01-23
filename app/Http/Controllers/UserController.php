@@ -19,7 +19,7 @@ class UserController extends Controller
 
         $users = User::skip($skip)->take($regPerPage)->orderByDesc('id')->get();
 
-        return response()->json($users, 200);
+        return response()->json($users->toResourceCollection(), 200);
     }
 
     /**
@@ -34,7 +34,7 @@ class UserController extends Controller
             $user->fill($data);
             $user->password = bcrypt('defaultPassword123');
             $user->save();
-            return response()->json($user, 201);
+            return response()->json($user->toResource(), 201);
         } catch (\Exception $ex) {
             return response()->json(['message' => 'Falha ao criar o usuário!'], 400);
         }
@@ -44,7 +44,7 @@ class UserController extends Controller
     {   
         try {
             $user = User::findOrFail($id); 
-            return response()->json($user, 200);
+            return response()->json($user->toResource(), 200);
         } catch (\Exception $ex) {
             return response()->json(['message' => 'Falha ao buscar usuário!'], 404);
         }
@@ -59,7 +59,7 @@ class UserController extends Controller
             $user = User::findOrFail($id); // Se não achar, vai pro catch
             $data = $request->validated();
             $user->update($data);
-            return response()->json($user, 200);
+            return response()->json($user->toResource(), 200);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $ex) {
             // Tratamento específico para quando não encontra o ID
             // Acionado pelo findOrFail dexando o codigo mais organizado e sem parecer repetitivo
