@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\TryCatch;
 
 class UserController extends Controller
 {
@@ -46,9 +45,20 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(UpdateUserRequest $request, string $id)
+    {   
+        try {
+            $user = User::findOrFail($id); // Se não achar, vai pro catch
+            $data = $request->validated();
+            $user->update($data);
+            return response()->json($user, 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $ex) {
+            // Tratamento específico para quando não encontra o ID
+            // Acionado pelo findOrFail dexando o codigo mais organizado e sem parecer repetitivo
+            return response()->json(['message' => 'Usuário não encontrado!'], 404);
+        } catch (\Exception $ex) {
+            return response()->json(['message' => 'Erro interno no servidor'], 500);
+        }
     }
 
     /**
@@ -56,6 +66,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            return response()->json(['message' => 'Usuário deletado com sucesso!', 200]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Falha ao deletar o usuário!'], 400);
+        }
     }
 }
