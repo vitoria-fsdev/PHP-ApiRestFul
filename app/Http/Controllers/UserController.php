@@ -5,12 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $users = User::all(); 
+        $currentPage = $request->get('current_page') ?? 1;
+        $regPerPage = 3;
+
+        $skip = ($currentPage - 1) * $regPerPage;
+
+        $users = User::skip($skip)->take($regPerPage)->orderByDesc('id')->get();
+
         return response()->json($users, 200);
     }
 
