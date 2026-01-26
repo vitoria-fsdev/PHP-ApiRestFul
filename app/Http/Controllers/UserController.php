@@ -38,9 +38,25 @@ class UserController extends Controller
         return response()->json($users->toResourceCollection(), 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    #[OA\Post(
+        path: '/api/users',
+        operationId: 'createUser',
+        summary: 'Cria um novo usuário',
+        tags: ['Usuários']
+    )]
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(ref: '#/components/schemas/User')
+    )]
+    #[OA\Response(
+        response: 201,
+        description: 'Usuário criado com sucesso',
+        content: new OA\JsonContent(ref: '#/components/schemas/User')
+    )]
+    #[OA\Response(
+        response: 400,
+        description: 'Falha ao criar o usuário'
+    )]
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
