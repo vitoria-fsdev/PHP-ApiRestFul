@@ -6,9 +6,21 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use OpenApi\Attributes as OA;
 
 class UserController extends Controller
-{
+{   
+
+    #[OA\Get(
+        path: '/api/users', // Defina o caminho real aqui
+        operationId: 'getUsersList',
+        summary: 'Lista todos os usuários com paginação',
+        tags: ['Usuários']
+    )]
+    #[OA\Response(
+        response: '200', 
+        description: 'Lista de usuários retornada com sucesso'
+    )]
     public function index(Request $request)
     {
         $users = User::all(); 
