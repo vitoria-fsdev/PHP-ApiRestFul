@@ -100,9 +100,33 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    #[OA\Put(
+        path: '/api/users/{id}',
+        operationId: 'updateUser',
+        summary: 'Atualiza um usuário específico pelo ID',
+        tags: ['Usuários'],
+        parameters: [
+            new OA\Parameter(ref: '#/components/parameters/UserId')
+        ],
+        requestBody: new OA\RequestBody(
+            required: false,
+            content: [
+                new OA\MediaType(
+                    mediaType: 'application/json',
+                    schema: new OA\Schema(ref: '#/components/schemas/UpdateUserRequest')
+                )
+            ]
+        )
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'Usuário atualizado com sucesso',
+        content: new OA\JsonContent(ref: '#/components/schemas/User')
+    )]
+    #[OA\Response(
+        response: 404,
+        description: 'Usuário não encontrado'
+    )]
     public function update(UpdateUserRequest $request, string $id)
     {   
         try {
@@ -119,9 +143,23 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    #[OA\Delete(
+        path: '/api/users/{id}',
+        operationId: 'deleteUser', 
+        summary: 'Deleta um usuário específico pelo ID',
+        tags: ['Usuários'],
+        parameters: [
+            new OA\Parameter(ref: '#/components/parameters/UserId')
+        ]
+    )]
+    #[OA\Response(
+        response: 204,
+        description: 'Usuário deletado com sucesso'
+    )]
+    #[OA\Response(
+        response: 400,
+        description: 'Falha ao deletar o usuário'
+    )]
     public function destroy(string $id)
     {
         try {
