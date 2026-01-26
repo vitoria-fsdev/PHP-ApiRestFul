@@ -12,14 +12,18 @@ class UserController extends Controller
 {   
 
     #[OA\Get(
-        path: '/api/users', // Defina o caminho real aqui
+        path: '/api/users',
         operationId: 'getUsersList',
         summary: 'Lista todos os usuários com paginação',
         tags: ['Usuários']
     )]
     #[OA\Response(
-        response: '200', 
-        description: 'Lista de usuários retornada com sucesso'
+        response: 200,
+        description: 'Lista de usuários',
+        content: new OA\JsonContent(
+            type: 'array',
+            items: new OA\Items(ref: '#/components/schemas/User')
+        )
     )]
     public function index(Request $request)
     {
@@ -34,9 +38,25 @@ class UserController extends Controller
         return response()->json($users->toResourceCollection(), 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    #[OA\Post(
+        path: '/api/users',
+        operationId: 'createUser',
+        summary: 'Cria um novo usuário',
+        tags: ['Usuários']
+    )]
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(ref: '#/components/schemas/CreateUserRequest')
+    )]
+    #[OA\Response(
+        response: 201,
+        description: 'Usuário criado com sucesso',
+        content: new OA\JsonContent(ref: '#/components/schemas/User')
+    )]
+    #[OA\Response(
+        response: 400,
+        description: 'Falha ao criar o usuário'
+    )]
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
@@ -52,6 +72,24 @@ class UserController extends Controller
         }
     }
 
+    #[OA\Get(
+        path: '/api/users/{id}',
+        operationId: 'getUser',
+        summary: 'Retorna um usuário específico pelo ID',
+        parameters: [
+            new OA\Parameter(ref: '#/components/parameters/UserId')
+        ],
+        tags: ['Usuários']
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'Usuário encontrado',
+        content: new OA\JsonContent(ref: '#/components/schemas/User')
+    )]
+    #[OA\Response(
+        response: 404,
+        description: 'Usuário não encontrado'
+    )]
     public function show(string $id)
     {   
         try {
@@ -62,9 +100,40 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    #[OA\Put(
+        path: '/api/users/{id}',
+        operationId: 'updateUser',
+        summary: 'Atualiza um usuário',
+        tags: ['Usuários'],
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'string')
+            )
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'Novo Nome'),
+                    new OA\Property(property: 'email', type: 'string', example: 'novo@email.com'),
+                    new OA\Property(property: 'password', type: 'string', example: 'novaSenha123'),
+                    new OA\Property(property: 'date_of_birth', type: 'string', format: 'date-time'),
+                ]
+            )
+        )
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'Usuário atualizado com sucesso',
+        content: new OA\JsonContent(ref: '#/components/schemas/User')
+    )]
+    #[OA\Response(
+        response: 404,
+        description: 'Usuário não encontrado'
+    )]
     public function update(UpdateUserRequest $request, string $id)
     {   
         try {
@@ -81,9 +150,23 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    #[OA\Delete(
+        path: '/api/users/{id}',
+        operationId: 'deleteUser', 
+        summary: 'Deleta um usuário específico pelo ID',
+        tags: ['Usuários'],
+        parameters: [
+            new OA\Parameter(ref: '#/components/parameters/UserId')
+        ]
+    )]
+    #[OA\Response(
+        response: 204,
+        description: 'Usuário deletado com sucesso'
+    )]
+    #[OA\Response(
+        response: 400,
+        description: 'Falha ao deletar o usuário'
+    )]
     public function destroy(string $id)
     {
         try {
