@@ -103,19 +103,26 @@ class UserController extends Controller
     #[OA\Put(
         path: '/api/users/{id}',
         operationId: 'updateUser',
-        summary: 'Atualiza um usuário específico pelo ID',
+        summary: 'Atualiza um usuário',
         tags: ['Usuários'],
         parameters: [
-            new OA\Parameter(ref: '#/components/parameters/UserId')
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'string')
+            )
         ],
         requestBody: new OA\RequestBody(
-            required: false,
-            content: [
-                new OA\MediaType(
-                    mediaType: 'application/json',
-                    schema: new OA\Schema(ref: '#/components/schemas/UpdateUserRequest')
-                )
-            ]
+            required: true,
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'Novo Nome'),
+                    new OA\Property(property: 'email', type: 'string', example: 'novo@email.com'),
+                    new OA\Property(property: 'password', type: 'string', example: 'novaSenha123'),
+                    new OA\Property(property: 'date_of_birth', type: 'string', format: 'date-time'),
+                ]
+            )
         )
     )]
     #[OA\Response(

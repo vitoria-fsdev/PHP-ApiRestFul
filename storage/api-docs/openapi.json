@@ -99,15 +99,20 @@
                 "tags": [
                     "Usuários"
                 ],
-                "summary": "Atualiza um usuário específico pelo ID",
+                "summary": "Atualiza um usuário",
                 "operationId": "updateUser",
                 "parameters": [
                     {
-                        "$ref": "#/components/parameters/UserId"
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "requestBody": {
-                    "required": false,
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {

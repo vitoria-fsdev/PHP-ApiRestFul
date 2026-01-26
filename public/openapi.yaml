@@ -1,0 +1,162 @@
+openapi: 3.0.0
+paths:
+  /api/users:
+    get:
+      tags:
+        - Usuários
+      summary: 'Lista todos os usuários com paginação'
+      operationId: getUsersList
+      responses:
+        '200':
+          description: 'Lista de usuários'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+        - Usuários
+      summary: 'Cria um novo usuário'
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: 'Usuário criado com sucesso'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'Falha ao criar o usuário'
+  '/api/users/{id}':
+    get:
+      tags:
+        - Usuários
+      summary: 'Retorna um usuário específico pelo ID'
+      operationId: getUser
+      parameters:
+        -
+          $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: 'Usuário encontrado'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: 'Usuário não encontrado'
+    put:
+      tags:
+        - Usuários
+      summary: 'Atualiza um usuário'
+      operationId: updateUser
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: 'Usuário atualizado com sucesso'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: 'Usuário não encontrado'
+    delete:
+      tags:
+        - Usuários
+      summary: 'Deleta um usuário específico pelo ID'
+      operationId: deleteUser
+      parameters:
+        -
+          $ref: '#/components/parameters/UserId'
+      responses:
+        '204':
+          description: 'Usuário deletado com sucesso'
+        '400':
+          description: 'Falha ao deletar o usuário'
+components:
+  schemas:
+    CreateUserRequest:
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+          example: 'João Silva'
+        email:
+          type: string
+          example: joao@email.com
+        password:
+          type: string
+          example: senha123
+        date_of_birth:
+          type: string
+          format: date-time
+      type: object
+    UpdateUserRequest:
+      properties:
+        name:
+          type: string
+          example: 'João Silva'
+        email:
+          type: string
+          example: joao.silva@example.com
+        password:
+          type: string
+          example: novaSenha123
+        date_of_birth:
+          type: string
+          format: date-time
+      type: object
+    User:
+      properties:
+        id:
+          type: integer
+          example: 1
+          nullable: true
+        name:
+          type: string
+          example: 'João Silva'
+        email:
+          type: string
+          example: joao@email.com
+        password:
+          type: string
+          example: senha123
+        date_of_birth:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+      type: object
+tags:
+  -
+    name: Usuários
+    description: Usuários
