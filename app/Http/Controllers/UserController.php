@@ -12,14 +12,18 @@ class UserController extends Controller
 {   
 
     #[OA\Get(
-        path: '/api/users', // Defina o caminho real aqui
+        path: '/api/users',
         operationId: 'getUsersList',
         summary: 'Lista todos os usuários com paginação',
         tags: ['Usuários']
     )]
     #[OA\Response(
-        response: '200', 
-        description: 'Lista de usuários retornada com sucesso'
+        response: 200,
+        description: 'Lista de usuários',
+        content: new OA\JsonContent(
+            type: 'array',
+            items: new OA\Items(ref: '#/components/schemas/User')
+        )
     )]
     public function index(Request $request)
     {
@@ -52,6 +56,24 @@ class UserController extends Controller
         }
     }
 
+    #[OA\Get(
+        path: '/api/users/{id}',
+        operationId: 'getUser',
+        summary: 'Retorna um usuário específico pelo ID',
+        parameters: [
+            new OA\Parameter(ref: '#/components/parameters/UserId')
+        ],
+        tags: ['Usuários']
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'Usuário encontrado',
+        content: new OA\JsonContent(ref: '#/components/schemas/User')
+    )]
+    #[OA\Response(
+        response: 404,
+        description: 'Usuário não encontrado'
+    )]
     public function show(string $id)
     {   
         try {
