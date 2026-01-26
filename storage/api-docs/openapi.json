@@ -33,6 +33,38 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Cria um novo usuário",
+                "operationId": "createUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Falha ao criar o usuário"
+                    }
+                }
             }
         },
         "/api/users/{id}": {
@@ -67,11 +99,29 @@
     },
     "components": {
         "schemas": {
+            "CreateUserRequest": {
+                "required": [
+                    "name",
+                    "email"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "João Silva"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "joao@email.com"
+                    }
+                },
+                "type": "object"
+            },
             "User": {
                 "properties": {
                     "id": {
                         "type": "integer",
-                        "example": 1
+                        "example": 1,
+                        "nullable": true
                     },
                     "name": {
                         "type": "string",
@@ -81,13 +131,24 @@
                         "type": "string",
                         "example": "joao@email.com"
                     },
+                    "password": {
+                        "type": "string",
+                        "example": "senha123"
+                    },
+                    "date_of_birth": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
                     "created_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     },
                     "updated_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     }
                 },
                 "type": "object"

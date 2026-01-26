@@ -46,7 +46,7 @@ class UserController extends Controller
     )]
     #[OA\RequestBody(
         required: true,
-        content: new OA\JsonContent(ref: '#/components/schemas/User')
+        content: new OA\JsonContent(ref: '#/components/schemas/CreateUserRequest')
     )]
     #[OA\Response(
         response: 201,
