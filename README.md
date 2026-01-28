@@ -104,6 +104,4 @@ A API utiliza o comando `Route::apiResource`, que gerencia automaticamente o cic
 
 ## 👩‍💻 Autora
 
-**Maria Vitória** - [vitoria-fsdev](https://www.google.com/search?q=https://github.com/vitoria-fsdev)
-
-```
+**Maria Vitória** - https://github.com/vitoria-fsdev
