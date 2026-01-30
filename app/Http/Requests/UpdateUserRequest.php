@@ -5,15 +5,18 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
-{
+{   
     protected function prepareForValidation()
     {
-        $this->merge(
-            collect($this->all())
+        $data = $this->json()->all();
+
+        $this->replace(
+            collect($data)
                 ->filter(fn ($value) => $value !== null && $value !== '')
                 ->toArray()
         );
     }
+
     /**
      * Determine if the user is authorized to make this request.
      */

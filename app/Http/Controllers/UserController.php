@@ -80,7 +80,7 @@ class UserController extends Controller
             new OA\Parameter(ref: '#/components/parameters/UserId')
         ],
         tags: ['Usuários']
-    )]
+    )]  
     #[OA\Response(
         response: 200,
         description: 'Usuário encontrado',
@@ -106,24 +106,23 @@ class UserController extends Controller
         summary: 'Atualiza um usuário',
         tags: ['Usuários'],
         parameters: [
-            new OA\Parameter(
-                name: 'id',
+            new OA\Parameter(name: 'id',
                 in: 'path',
                 required: true,
                 schema: new OA\Schema(type: 'string')
             )
-        ],
-        requestBody: new OA\RequestBody(
-            required: true,
-            content: new OA\JsonContent(
-                properties: [
-                    new OA\Property(property: 'name', type: 'string', example: 'Novo Nome'),
-                    new OA\Property(property: 'email', type: 'string', example: 'novo@email.com'),
-                    new OA\Property(property: 'password', type: 'string', example: 'novaSenha123'),
-                    new OA\Property(property: 'date_of_birth', type: 'string', format: 'date-time'),
-                ]
-            )
-        )
+        ]
+    )]
+    #[OA\Header(
+        header: 'Accept',
+        description: 'Tipo de resposta',
+        schema: new OA\Schema(type: 'string', example: 'application/json')
+    )]
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\MediaType(
+            mediaType: 'application/json',
+            schema: new OA\Schema(ref: '#/components/schemas/UpdateUserSchema'))
     )]
     #[OA\Response(
         response: 200,
@@ -139,6 +138,11 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id); // Se não achar, vai pro catch
             $data = $request->validated();
+
+            if (isset($data['password'])) {
+                $data['password'] = bcrypt($data['password']);
+            }
+
             $user->update($data);
             return response()->json($user->toResource(), 200);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $ex) {

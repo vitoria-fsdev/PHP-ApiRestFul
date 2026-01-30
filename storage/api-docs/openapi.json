@@ -116,7 +116,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateUserRequest"
+                                "$ref": "#/components/schemas/UpdateUserSchema"
                             }
                         }
                     }
@@ -124,6 +124,15 @@
                 "responses": {
                     "200": {
                         "description": "Usuário atualizado com sucesso",
+                        "headers": {
+                            "Accept": {
+                                "description": "Tipo de resposta",
+                                "schema": {
+                                    "type": "string",
+                                    "example": "application/json"
+                                }
+                            }
+                        },
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -133,7 +142,16 @@
                         }
                     },
                     "404": {
-                        "description": "Usuário não encontrado"
+                        "description": "Usuário não encontrado",
+                        "headers": {
+                            "Accept": {
+                                "description": "Tipo de resposta",
+                                "schema": {
+                                    "type": "string",
+                                    "example": "application/json"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -186,15 +204,15 @@
                 },
                 "type": "object"
             },
-            "UpdateUserRequest": {
+            "UpdateUserSchema": {
                 "properties": {
                     "name": {
                         "type": "string",
-                        "example": "João Silva"
+                        "example": "Novu Nome"
                     },
                     "email": {
                         "type": "string",
-                        "example": "joao.silva@example.com"
+                        "example": "novo@email.com"
                     },
                     "password": {
                         "type": "string",
@@ -202,7 +220,7 @@
                     },
                     "date_of_birth": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date"
                     }
                 },
                 "type": "object"
