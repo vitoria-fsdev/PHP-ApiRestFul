@@ -21,6 +21,118 @@ Este projeto demonstra a implementação de um CRUD completo utilizando o **Lara
 
 ```
 
+# Estrutura do Projeto
+```
+├── 📁 app
+│   ├── 📁 Http
+│   │   ├── 📁 Controllers
+│   │   │   ├── 🐘 Controller.php
+│   │   │   └── 🐘 UserController.php
+│   │   ├── 📁 Requests
+│   │   │   ├── 🐘 StoreUserRequest.php
+│   │   │   └── 🐘 UpdateUserRequest.php
+│   │   └── 📁 Resources
+│   │       ├── 🐘 UserCollection.php
+│   │       └── 🐘 UserResource.php
+│   ├── 📁 Models
+│   │   └── 🐘 User.php
+│   ├── 📁 OpenApi
+│   │   ├── 📁 Parameters
+│   │   │   └── 🐘 UserParameter.php
+│   │   ├── 📁 Schemas
+│   │   │   ├── 🐘 CreateUserRequest.php
+│   │   │   ├── 🐘 UpdateUserRequest.php
+│   │   │   └── 🐘 UserSchema.php
+│   │   └── 🐘 OpenApiSpec.php
+│   └── 📁 Providers
+│       └── 🐘 AppServiceProvider.php
+├── 📁 bootstrap
+│   ├── 🐘 app.php
+│   └── 🐘 providers.php
+├── 📁 config
+│   ├── 🐘 app.php
+│   ├── 🐘 auth.php
+│   ├── 🐘 cache.php
+│   ├── 🐘 database.php
+│   ├── 🐘 filesystems.php
+│   ├── 🐘 l5-swagger.php
+│   ├── 🐘 logging.php
+│   ├── 🐘 mail.php
+│   ├── 🐘 queue.php
+│   ├── 🐘 sanctum.php
+│   ├── 🐘 services.php
+│   └── 🐘 session.php
+├── 📁 database
+│   ├── 📁 factories
+│   │   └── 🐘 UserFactory.php
+│   ├── 📁 migrations
+│   │   ├── 🐘 0001_01_01_000000_create_users_table.php
+│   │   ├── 🐘 0001_01_01_000001_create_cache_table.php
+│   │   ├── 🐘 0001_01_01_000002_create_jobs_table.php
+│   │   └── 🐘 2026_01_22_193923_create_personal_access_tokens_table.php
+│   ├── 📁 seeders
+│   │   └── 🐘 DatabaseSeeder.php
+│   ├── ⚙️ .gitignore
+│   └── 📄 database.sqlite
+├── 📁 public
+│   ├── ⚙️ .htaccess
+│   ├── 📄 favicon.ico
+│   ├── 🐘 index.php
+│   ├── ⚙️ openapi.yaml
+│   └── 📄 robots.txt
+├── 📁 resources
+│   ├── 📁 css
+│   │   └── 🎨 app.css
+│   ├── 📁 js
+│   │   ├── 📄 app.js
+│   │   └── 📄 bootstrap.js
+│   └── 📁 views
+│       └── 🐘 welcome.blade.php
+├── 📁 routes
+│   ├── 🐘 api.php
+│   ├── 🐘 console.php
+│   └── 🐘 web.php
+├── 📁 storage
+│   ├── 📁 api-docs
+│   │   └── ⚙️ openapi.json
+│   ├── 📁 app
+│   │   ├── 📁 private
+│   │   │   └── ⚙️ .gitignore
+│   │   ├── 📁 public
+│   │   │   └── ⚙️ .gitignore
+│   │   └── ⚙️ .gitignore
+│   ├── 📁 framework
+│   │   ├── 📁 sessions
+│   │   │   └── ⚙️ .gitignore
+│   │   ├── 📁 testing
+│   │   │   └── ⚙️ .gitignore
+│   │   ├── 📁 views
+│   │   │   ├── ⚙️ .gitignore
+│   │   │   └── 🐘 5a80b483212703e484a9e5ceb9d70ace.php
+│   │   └── ⚙️ .gitignore
+│   └── 📁 logs
+│       └── ⚙️ .gitignore
+├── 📁 tests
+│   ├── 📁 Feature
+│   │   └── 🐘 ExampleTest.php
+│   ├── 📁 Unit
+│   │   └── 🐘 ExampleTest.php
+│   ├── 🐘 Pest.php
+│   └── 🐘 TestCase.php
+├── ⚙️ .editorconfig
+├── ⚙️ .env.example
+├── ⚙️ .gitattributes
+├── ⚙️ .gitignore
+├── 📝 README.md
+├── 📄 artisan
+├── ⚙️ composer.json
+├── ⚙️ package-lock.json
+├── ⚙️ package.json
+├── ⚙️ phpunit.xml
+└── 📄 vite.config.js
+```
+
+
 2. **Instale as dependências:**
 ```bash
 composer install
