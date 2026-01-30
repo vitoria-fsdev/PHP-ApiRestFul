@@ -1,4 +1,4 @@
-```markdown
+```
 # 🚀 PHP Laravel - API RestFul CRUD (Swagger Docs)
 
 Este projeto demonstra a implementação de um CRUD completo utilizando o **Laravel**, seguindo os padrões RESTful. A API foi construída utilizando controllers do tipo resource e possui documentação interativa via Swagger.
@@ -9,8 +9,6 @@ Este projeto demonstra a implementação de um CRUD completo utilizando o **Lara
 * **Documentação:** Swagger / OpenAPI
 * **Ferramenta CLI:** Artisan
 * **Banco de Dados:** SQLite/MySQL
-
----
 
 ## ⚙️ Configuração e Instalação
 
